@@ -1,196 +1,926 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Detector Inteligente</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema Inteligente de Detección de Gas y Monóxido</title>
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #0f172a;
-  color: white;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
 
-nav {
-  background: #020617;
-  display: flex;
-  justify-content: space-around;
-  padding: 15px;
-  position: sticky;
-  top: 0;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      transition: background 0.4s ease;
+    }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #020617;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      padding: 14px 10px;
+    }
 
-header {
-  text-align: center;
-  padding: 30px;
-  background: linear-gradient(45deg, red, darkred);
-}
+    nav a {
+      color: #e5e7eb;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
 
-.contenedor {
-  padding: 20px;
-}
+    nav a:hover {
+      color: #f87171;
+    }
 
-.card {
-  background: #1e293b;
-  margin: 15px 0;
-  padding: 20px;
-  border-radius: 15px;
-}
+    header {
+      background: linear-gradient(135deg, #7f1d1d, #b91c1c, #7f1d1d);
+      padding: 42px 20px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    }
 
-h2 {
-  color: #f87171;
-}
+    header h1 {
+      margin: 0 0 10px 0;
+      font-size: 34px;
+    }
 
-button {
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  margin: 5px;
-  cursor: pointer;
-}
+    header p {
+      margin: 6px 0;
+      font-size: 18px;
+    }
 
-.rojo {background: red; color:white;}
-.verde {background: green; color:white;}
-.naranja {background: orange; color:black;}
-.azul {background: #2563eb; color:white;}
+    .subinfo {
+      font-size: 14px;
+      color: #fecaca;
+    }
 
-#estado {
-  font-size: 22px;
-  margin-top: 10px;
-}
+    .wrap {
+      width: 92%;
+      max-width: 1300px;
+      margin: 24px auto;
+    }
 
-.barra {
-  height: 20px;
-  background: #333;
-  border-radius: 20px;
-  overflow: hidden;
-  margin-top: 10px;
-}
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
 
-.relleno {
-  height: 100%;
-  width: 10%;
-  background: green;
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
 
-.parpadeo {
-  animation: flash 1s infinite;
-}
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.22);
+    }
 
-@keyframes flash {
-  0% {background:#0f172a;}
-  50% {background:red;}
-  100% {background:#0f172a;}
-}
+    .card h2 {
+      margin-top: 0;
+      color: #f87171;
+      font-size: 24px;
+    }
 
-footer {
-  text-align:center;
-  padding:20px;
-}
-</style>
+    .card h3 {
+      color: #fca5a5;
+      margin-bottom: 10px;
+    }
+
+    p, li {
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+
+    ul, ol {
+      padding-left: 22px;
+    }
+
+    .panel-estado {
+      background: #0b1220;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .estado-linea {
+      margin: 8px 0;
+      font-size: 18px;
+    }
+
+    .grande {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+      background: #334155;
+    }
+
+    .chip.ok { background: #166534; }
+    .chip.warn { background: #9a3412; }
+    .chip.danger { background: #991b1b; }
+
+    .barra {
+      width: 100%;
+      height: 24px;
+      background: #334155;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 14px 0 6px 0;
+    }
+
+    .relleno {
+      width: 12%;
+      height: 100%;
+      background: #22c55e;
+      transition: width 0.5s ease, background 0.5s ease;
+    }
+
+    .botones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+
+    .btn-rojo { background: #dc2626; color: white; }
+    .btn-naranja { background: #ea580c; color: white; }
+    .btn-azul { background: #2563eb; color: white; }
+    .btn-verde { background: #16a34a; color: white; }
+    .btn-gris { background: #475569; color: white; }
+    .btn-amarillo { background: #eab308; color: #111827; }
+
+    .sirena {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 30px;
+      margin-top: 10px;
+      min-height: 50px;
+    }
+
+    .luz {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1f2937;
+      box-shadow: 0 0 0 transparent;
+      transition: 0.25s ease;
+    }
+
+    .luz.verde {
+      background: #22c55e;
+      box-shadow: 0 0 18px #22c55e;
+    }
+
+    .luz.naranja {
+      background: #f97316;
+      box-shadow: 0 0 18px #f97316;
+    }
+
+    .luz.roja {
+      background: #ef4444;
+      box-shadow: 0 0 18px #ef4444;
+    }
+
+    .telefono {
+      width: 260px;
+      margin: 15px auto 0 auto;
+      background: #111827;
+      border: 3px solid #374151;
+      border-radius: 28px;
+      padding: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+
+    .pantalla {
+      background: #f8fafc;
+      color: #111827;
+      border-radius: 18px;
+      padding: 16px;
+      min-height: 340px;
+      text-align: left;
+    }
+
+    .notif {
+      background: #fee2e2;
+      color: #991b1b;
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .oculto {
+      display: none;
+    }
+
+    .app-box {
+      background: white;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      border: 1px solid #d1d5db;
+    }
+
+    .mapa {
+      background: #0b1220;
+      border-radius: 16px;
+      padding: 16px;
+      overflow: auto;
+    }
+
+    .plano {
+      position: relative;
+      width: 100%;
+      min-height: 330px;
+      background: #e2e8f0;
+      border-radius: 14px;
+      padding: 16px;
+      color: #111827;
+    }
+
+    .cuarto {
+      position: absolute;
+      border: 3px solid #334155;
+      border-radius: 8px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      text-align: center;
+      padding: 6px;
+    }
+
+    .salida {
+      position: absolute;
+      background: #22c55e;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .sensor-dot {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #2563eb;
+      border: 2px solid white;
+      box-shadow: 0 0 0 transparent;
+    }
+
+    .sensor-dot.activo {
+      background: #ef4444;
+      box-shadow: 0 0 16px #ef4444;
+    }
+
+    .flecha {
+      position: absolute;
+      font-size: 28px;
+      color: #16a34a;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #475569;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background: #334155;
+      color: #fff;
+    }
+
+    .historial {
+      max-height: 260px;
+      overflow: auto;
+      background: #0b1220;
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid #334155;
+    }
+
+    .evento {
+      padding: 10px;
+      border-bottom: 1px solid #334155;
+      font-size: 14px;
+    }
+
+    .evento:last-child {
+      border-bottom: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 15px 40px;
+      color: #cbd5e1;
+    }
+
+    .destacado {
+      color: #fca5a5;
+      font-weight: bold;
+    }
+
+    .parpadeo-rojo {
+      animation: rojo 1s infinite;
+    }
+
+    .parpadeo-naranja {
+      animation: naranja 1s infinite;
+    }
+
+    .parpadeo-amarillo {
+      animation: amarillo 1s infinite;
+    }
+
+    @keyframes rojo {
+      0% { background: #0f172a; }
+      50% { background: #7f1d1d; }
+      100% { background: #0f172a; }
+    }
+
+    @keyframes naranja {
+      0% { background: #0f172a; }
+      50% { background: #7c2d12; }
+      100% { background: #0f172a; }
+    }
+
+    @keyframes amarillo {
+      0% { background: #0f172a; }
+      50% { background: #713f12; }
+      100% { background: #0f172a; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 28px;
+      }
+
+      .telefono {
+        width: 100%;
+        max-width: 280px;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<nav>
-  <a href="#">Inicio</a>
-  <a href="#">Sistema</a>
-  <a href="#">App</a>
-</nav>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#estado-sistema">Estado</a>
+    <a href="#simulacion">Simulación</a>
+    <a href="#appmovil">App</a>
+    <a href="#plano">Plano</a>
+    <a href="#historial-seccion">Historial</a>
+    <a href="#info">Información</a>
+  </nav>
 
-<header>
-  <h1>🚨 Detector Inteligente de Gas</h1>
-  <p>Con sistema de emergencia y app</p>
-</header>
+  <header id="inicio">
+    <h1>🚨 Sistema Inteligente de Detección de Monóxido de Carbono y Gas</h1>
+    <p>Con aplicación móvil, alarma sonora y salida de emergencia</p>
+    <p class="subinfo">Proyecto escolar tecnológico — seguridad, monitoreo y asistencia en tiempo real</p>
+  </header>
 
-<div class="contenedor">
+  <div class="wrap">
 
-<div class="card">
-<h2>Estado del sistema</h2>
-<p id="estado">Estado: Seguro</p>
-<p id="accion">Monitoreando ambiente</p>
+    <section class="hero-grid">
+      <div class="card">
+        <h2>Introducción</h2>
+        <p>
+          En viviendas, escuelas y talleres pueden ocurrir fugas de gas o acumulación de monóxido de carbono.
+          Estas situaciones son peligrosas porque pueden provocar malestar físico, intoxicaciones, incendios
+          e incluso la muerte.
+        </p>
+        <p>
+          Este proyecto propone un sistema inteligente que <span class="destacado">detecta</span>,
+          <span class="destacado">alerta</span>, <span class="destacado">guía</span> y
+          <span class="destacado">facilita la evacuación</span> de forma segura.
+        </p>
+        <div class="chips">
+          <span class="chip ok">Monitoreo constante</span>
+          <span class="chip warn">Alertas inmediatas</span>
+          <span class="chip danger">Emergencias críticas</span>
+        </div>
+      </div>
 
-<div class="barra">
-  <div class="relleno" id="barra"></div>
-</div>
+      <div class="card" id="estado-sistema">
+        <h2>Panel general</h2>
+        <div class="panel-estado">
+          <div class="estado-linea" id="conexion">🟢 Conectado</div>
+          <div class="grande" id="estado">Estado: Seguro</div>
+          <div class="estado-linea" id="accionSistema">Acción actual: Monitoreando ambiente</div>
+          <div class="estado-linea" id="nivelGas">Nivel detectado: 12%</div>
+          <div class="estado-linea" id="sensorActivo">Sensor activo: Normal</div>
+          <div class="estado-linea" id="horaSistema">Hora: --:--:--</div>
 
-<button class="rojo" onclick="gas()">Fuga de gas</button>
-<button class="naranja" onclick="mono()">Monóxido</button>
-<button class="azul" onclick="fuego()">Incendio</button>
-<button class="verde" onclick="normal()">Normal</button>
-</div>
+          <div class="barra">
+            <div class="relleno" id="barraGas"></div>
+          </div>
 
-<div class="card">
-<h2>App simulada 📱</h2>
-<p id="app">Todo en orden</p>
-</div>
+          <div class="sirena">
+            <div class="luz verde" id="luz1"></div>
+            <div id="sirenaTexto">Sistema estable</div>
+            <div class="luz verde" id="luz2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="card">
-<h2>Información</h2>
-<p>El sistema detecta gases peligrosos y ayuda a evacuar.</p>
-</div>
+    <section class="grid" id="simulacion">
+      <div class="card">
+        <h2>Simulación del sistema</h2>
+        <p>
+          Acá podés probar distintos escenarios. Cada botón cambia el nivel de riesgo, el estado del sistema,
+          la guía para el usuario, la app móvil, la sirena, el plano de evacuación y el historial.
+        </p>
 
-</div>
+        <div class="botones">
+          <button class="btn-naranja" onclick="simularGas()">Simular fuga de gas</button>
+          <button class="btn-rojo" onclick="simularMonoxido()">Simular monóxido</button>
+          <button class="btn-azul" onclick="simularIncendio()">Simular incendio</button>
+          <button class="btn-amarillo" onclick="simularTemperatura()">Alta temperatura</button>
+          <button class="btn-verde" onclick="volverNormal()">Volver a estado normal</button>
+          <button class="btn-gris" onclick="probarSonido()">Probar sirena</button>
+        </div>
 
-<footer>
-Valentino Radice - 6°4°
-</footer>
+        <h3>Recomendación actual</h3>
+        <p id="recomendacionGeneral">No se detectan peligros. El sistema sigue analizando el ambiente.</p>
+      </div>
 
-<audio id="alarma">
-<source src="https://www.soundjay.com/alarm/alarm-clock-beep-01.mp3">
-</audio>
+      <div class="card">
+        <h2>Objetivos del proyecto</h2>
+        <ul>
+          <li>Detectar monóxido de carbono y metano.</li>
+          <li>Emitir una alarma sonora inmediata.</li>
+          <li>Enviar una alerta al teléfono celular.</li>
+          <li>Brindar instrucciones en tiempo real.</li>
+          <li>Facilitar la salida de emergencia.</li>
+        </ul>
 
-<script>
-function sonar(){document.getElementById("alarma").play();}
+        <h3>Componentes principales</h3>
+        <ul>
+          <li><strong>Módulo de detección:</strong> sensores de gas, CO y temperatura.</li>
+          <li><strong>Módulo de control:</strong> microcontrolador que procesa la información.</li>
+          <li><strong>Aplicación móvil:</strong> muestra alertas e instrucciones.</li>
+          <li><strong>Salida de emergencia:</strong> apertura o liberación rápida.</li>
+        </ul>
+      </div>
 
-function gas(){
-document.body.classList.add("parpadeo");
-estado.innerText="⚠️ Fuga de gas";
-accion.innerText="Ventilar y evacuar";
-barra.style.width="80%";
-barra.style.background="orange";
-app.innerText="Abrí ventanas y salí";
-sonar();
-}
+      <div class="card">
+        <h2>Funcionamiento</h2>
+        <ol>
+          <li>Los sensores analizan el ambiente constantemente.</li>
+          <li>Si detectan niveles peligrosos, mandan la señal al controlador.</li>
+          <li>El sistema activa alarma visual y sonora.</li>
+          <li>La app móvil muestra la emergencia e indica qué hacer.</li>
+          <li>Se habilita la evacuación según el tipo de riesgo detectado.</li>
+        </ol>
 
-function mono(){
-document.body.classList.add("parpadeo");
-estado.innerText="🚨 Monóxido detectado";
-accion.innerText="Evacuación inmediata";
-barra.style.width="90%";
-barra.style.background="red";
-app.innerText="Salí YA del lugar";
-sonar();
-}
+        <h3>Diferenciación de riesgos</h3>
+        <ul>
+          <li><strong>Fuga de gas:</strong> se prioriza ventilar y evacuar con cuidado.</li>
+          <li><strong>Monóxido:</strong> se prioriza salir rápido y buscar aire fresco.</li>
+          <li><strong>Incendio:</strong> se prioriza evacuar sin empeorar el fuego.</li>
+          <li><strong>Alta temperatura:</strong> se monitorea una posible condición previa al incendio.</li>
+        </ul>
+      </div>
+    </section>
 
-function fuego(){
-document.body.classList.add("parpadeo");
-estado.innerText="🔥 Incendio";
-accion.innerText="Evacuar sin ventilar";
-barra.style.width="95%";
-barra.style.background="yellow";
-app.innerText="No abras ventanas";
-sonar();
-}
+    <section class="grid" id="appmovil">
+      <div class="card">
+        <h2>Aplicación móvil simulada</h2>
+        <p>Representación de cómo se vería la alerta en el celular del usuario.</p>
 
-function normal(){
-document.body.classList.remove("parpadeo");
-estado.innerText="Estado: Seguro";
-accion.innerText="Monitoreando";
-barra.style.width="10%";
-barra.style.background="green";
-app.innerText="Todo en orden";
-document.getElementById("alarma").pause();
-}
-</script>
+        <div class="telefono">
+          <div class="pantalla">
+            <div class="notif oculto" id="notificacion">⚠️ Emergencia detectada</div>
 
+            <div class="app-box"><strong>Estado:</strong> <span id="appEstado">Seguro</span></div>
+            <div class="app-box"><strong>Nivel:</strong> <span id="appNivel">12%</span></div>
+            <div class="app-box"><strong>Acción:</strong> <span id="appAccion">Monitoreando</span></div>
+            <div class="app-box"><strong>Instrucción:</strong> <span id="appTexto">Todo funciona correctamente.</span></div>
+            <div class="app-box"><strong>Salida sugerida:</strong> <span id="appSalida">Ruta principal libre.</span></div>
+            <div class="app-box"><strong>Último evento:</strong> <span id="appEvento">Sin novedades.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="plano">
+        <h2>Plano de evacuación simulado</h2>
+        <p>
+          Este plano muestra sensores, ambientes y salida de emergencia. Cuando se activa una simulación,
+          cambia la ruta sugerida y el sensor en alerta.
+        </p>
+
+        <div class="mapa">
+          <div class="plano">
+            <div class="cuarto" style="top:20px; left:20px; width:180px; height:90px;">Cocina</div>
+            <div class="cuarto" style="top:20px; left:220px; width:180px; height:90px;">Living</div>
+            <div class="cuarto" style="top:130px; left:20px; width:180px; height:90px;">Habitación</div>
+            <div class="cuarto" style="top:130px; left:220px; width:180px; height:90px;">Pasillo</div>
+            <div class="cuarto" style="top:240px; left:20px; width:380px; height:65px;">Patio / Zona segura</div>
+
+            <div class="sensor-dot" id="sensorCocina" style="top:55px; left:175px;"></div>
+            <div class="sensor-dot" id="sensorLiving" style="top:55px; left:375px;"></div>
+            <div class="sensor-dot" id="sensorHabitacion" style="top:165px; left:175px;"></div>
+            <div class="sensor-dot" id="sensorPasillo" style="top:165px; left:375px;"></div>
+
+            <div class="salida" style="top:255px; right:20px;">SALIDA</div>
+
+            <div class="flecha" id="flecha1" style="top:85px; left:410px;">⬇</div>
+            <div class="flecha" id="flecha2" style="top:185px; left:410px;">⬇</div>
+            <div class="flecha" id="flecha3" style="top:250px; left:420px;">➡</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" id="historial-seccion">
+      <div class="card">
+        <h2>Historial del sistema</h2>
+        <p>Acá se van guardando los eventos simulados.</p>
+        <div class="historial" id="historial">
+          <div class="evento">Sistema iniciado correctamente.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Checklist de respuesta</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Situación</th>
+              <th>Qué hacer</th>
+              <th>Qué evitar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fuga de gas</td>
+              <td>Ventilar, cortar suministro si es posible, evacuar</td>
+              <td>No prender luces ni usar fuego</td>
+            </tr>
+            <tr>
+              <td>Monóxido</td>
+              <td>Salir al aire libre de inmediato</td>
+              <td>No quedarse adentro</td>
+            </tr>
+            <tr>
+              <td>Incendio</td>
+              <td>Evacuar por la vía segura</td>
+              <td>No volver a entrar</td>
+            </tr>
+            <tr>
+              <td>Alta temperatura</td>
+              <td>Revisar equipos y ventilar según el caso</td>
+              <td>No ignorar la alerta</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="grid" id="info">
+      <div class="card">
+        <h2>Ventajas</h2>
+        <ul>
+          <li>Mayor seguridad para las personas.</li>
+          <li>Respuesta automática e inmediata.</li>
+          <li>Notificación remota al celular.</li>
+          <li>Asistencia al usuario en tiempo real.</li>
+          <li>Mejor evacuación gracias a una salida guiada.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Desventajas</h2>
+        <ul>
+          <li>Dependencia tecnológica.</li>
+          <li>Posibles falsas alarmas.</li>
+          <li>Mantenimiento periódico de sensores.</li>
+          <li>Mayor complejidad de implementación.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Innovación</h2>
+        <p>
+          Lo innovador no es solo detectar el problema, sino acompañar a la persona durante la emergencia:
+          alerta, recomienda, muestra una salida y diferencia el tipo de riesgo.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="footer">
+    <p><strong>Valentino Radice - 6°4°</strong></p>
+    <p>Proyecto: Sistema inteligente de detección de monóxido de carbono y gas con aplicación móvil y salida de emergencia</p>
+  </div>
+
+  <audio id="alarmaAudio" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const estado = document.getElementById("estado");
+    const conexion = document.getElementById("conexion");
+    const nivelGas = document.getElementById("nivelGas");
+    const accionSistema = document.getElementById("accionSistema");
+    const sensorActivo = document.getElementById("sensorActivo");
+    const barraGas = document.getElementById("barraGas");
+    const recomendacionGeneral = document.getElementById("recomendacionGeneral");
+    const historial = document.getElementById("historial");
+    const horaSistema = document.getElementById("horaSistema");
+    const sirenaTexto = document.getElementById("sirenaTexto");
+    const luz1 = document.getElementById("luz1");
+    const luz2 = document.getElementById("luz2");
+
+    const appEstado = document.getElementById("appEstado");
+    const appNivel = document.getElementById("appNivel");
+    const appAccion = document.getElementById("appAccion");
+    const appTexto = document.getElementById("appTexto");
+    const appSalida = document.getElementById("appSalida");
+    const appEvento = document.getElementById("appEvento");
+    const notificacion = document.getElementById("notificacion");
+
+    const sensorCocina = document.getElementById("sensorCocina");
+    const sensorLiving = document.getElementById("sensorLiving");
+    const sensorHabitacion = document.getElementById("sensorHabitacion");
+    const sensorPasillo = document.getElementById("sensorPasillo");
+
+    const alarmaAudio = document.getElementById("alarmaAudio");
+
+    function actualizarHora() {
+      const ahora = new Date();
+      horaSistema.textContent = "Hora: " + ahora.toLocaleTimeString();
+    }
+
+    setInterval(actualizarHora, 1000);
+    actualizarHora();
+
+    function reiniciarSensores() {
+      sensorCocina.classList.remove("activo");
+      sensorLiving.classList.remove("activo");
+      sensorHabitacion.classList.remove("activo");
+      sensorPasillo.classList.remove("activo");
+    }
+
+    function cambiarLuces(color, texto) {
+      luz1.className = "luz " + color;
+      luz2.className = "luz " + color;
+      sirenaTexto.textContent = texto;
+    }
+
+    function mostrarNotif(texto) {
+      notificacion.classList.remove("oculto");
+      notificacion.textContent = texto;
+    }
+
+    function ocultarNotif() {
+      notificacion.classList.add("oculto");
+    }
+
+    function agregarHistorial(texto) {
+      const ahora = new Date().toLocaleTimeString();
+      const div = document.createElement("div");
+      div.className = "evento";
+      div.textContent = "[" + ahora + "] " + texto;
+      historial.prepend(div);
+    }
+
+    function sonarAlarma() {
+      alarmaAudio.currentTime = 0;
+      alarmaAudio.play().catch(() => {});
+    }
+
+    function detenerAlarma() {
+      alarmaAudio.pause();
+      alarmaAudio.currentTime = 0;
+    }
+
+    function limpiarAnimaciones() {
+      document.body.classList.remove("parpadeo-rojo", "parpadeo-naranja", "parpadeo-amarillo");
+    }
+
+    function actualizarApp(estadoTxt, nivelTxt, accionTxt, instruccionTxt, salidaTxt, eventoTxt) {
+      appEstado.textContent = estadoTxt;
+      appNivel.textContent = nivelTxt;
+      appAccion.textContent = accionTxt;
+      appTexto.textContent = instruccionTxt;
+      appSalida.textContent = salidaTxt;
+      appEvento.textContent = eventoTxt;
+    }
+
+    function simularGas() {
+      limpiarAnimaciones();
+      document.body.classList.add("parpadeo-naranja");
+      reiniciarSensores();
+      sensorCocina.classList.add("activo");
+
+      estado.textContent = "Estado: Fuga de gas detectada";
+      estado.style.color = "#fb923c";
+      conexion.textContent = "🟠 Alerta activa";
+      nivelGas.textContent = "Nivel detectado: 82%";
+      accionSistema.textContent = "Acción actual: Ventilar el ambiente y evacuar con cuidado";
+      sensorActivo.textContent = "Sensor activo: Cocina / Gas";
+      barraGas.style.width = "82%";
+      barraGas.style.background = "#f97316";
+      recomendacionGeneral.textContent = "Abrí ventanas, no prendas luces, no generes chispas y salí del lugar.";
+      cambiarLuces("naranja", "Alerta de gas");
+      mostrarNotif("⚠️ Fuga de gas detectada");
+      actualizarApp(
+        "Fuga de gas",
+        "82%",
+        "Ventilar y evacuar",
+        "Abrí ventanas, evitá encender artefactos y salí con cuidado.",
+        "Ruta principal hacia patio y salida.",
+        "Fuga detectada en cocina."
+      );
+      sonarAlarma();
+      agregarHistorial("Se simuló una fuga de gas en cocina.");
+    }
+
+    function simularMonoxido() {
+      limpiarAnimaciones();
+      document.body.classList.add("parpadeo-rojo");
+      reiniciarSensores();
+      sensorLiving.classList.add("activo");
+
+      estado.textContent = "Estado: Monóxido detectado";
+      estado.style.color = "#f87171";
+      conexion.textContent = "🔴 Emergencia";
+      nivelGas.textContent = "Nivel detectado: 91%";
+      accionSistema.textContent = "Acción actual: Evacuación inmediata y búsqueda de aire fresco";
+      sensorActivo.textContent = "Sensor activo: Living / CO";
+      barraGas.style.width = "91%";
+      barraGas.style.background = "#ef4444";
+      recomendacionGeneral.textContent = "Salí del lugar inmediatamente y dirigite a un espacio abierto y ventilado.";
+      cambiarLuces("roja", "Monóxido detectado");
+      mostrarNotif("🚨 Monóxido detectado");
+      actualizarApp(
+        "Monóxido detectado",
+        "91%",
+        "Evacuación inmediata",
+        "Salí ya mismo y buscá aire fresco.",
+        "Ruta más rápida hacia salida principal.",
+        "Monóxido detectado en living."
+      );
+      sonarAlarma();
+      agregarHistorial("Se simuló detección de monóxido en living.");
+    }
+
+    function simularIncendio() {
+      limpiarAnimaciones();
+      document.body.classList.add("parpadeo-rojo");
+      reiniciarSensores();
+      sensorPasillo.classList.add("activo");
+
+      estado.textContent = "Estado: Incendio detectado";
+      estado.style.color = "#facc15";
+      conexion.textContent = "🔴 Emergencia crítica";
+      nivelGas.textContent = "Nivel detectado: 97%";
+      accionSistema.textContent = "Acción actual: Evacuación total y bloqueo de zona de riesgo";
+      sensorActivo.textContent = "Sensor activo: Pasillo / Incendio";
+      barraGas.style.width = "97%";
+      barraGas.style.background = "#eab308";
+      recomendacionGeneral.textContent = "Evacuá rápido por la vía segura. No vuelvas a entrar ni realices acciones riesgosas.";
+      cambiarLuces("roja", "Incendio crítico");
+      mostrarNotif("🔥 Incendio detectado");
+      actualizarApp(
+        "Incendio detectado",
+        "97%",
+        "Evacuación total",
+        "Salí por la vía segura sin volver atrás.",
+        "Salida principal habilitada hacia zona segura.",
+        "Incendio detectado en pasillo."
+      );
+      sonarAlarma();
+      agregarHistorial("Se simuló un incendio en pasillo.");
+    }
+
+    function simularTemperatura() {
+      limpiarAnimaciones();
+      document.body.classList.add("parpadeo-amarillo");
+      reiniciarSensores();
+      sensorHabitacion.classList.add("activo");
+
+      estado.textContent = "Estado: Alta temperatura detectada";
+      estado.style.color = "#fde047";
+      conexion.textContent = "🟡 Precaución";
+      nivelGas.textContent = "Nivel detectado: 64%";
+      accionSistema.textContent = "Acción actual: Supervisión preventiva del ambiente";
+      sensorActivo.textContent = "Sensor activo: Habitación / Temperatura";
+      barraGas.style.width = "64%";
+      barraGas.style.background = "#eab308";
+      recomendacionGeneral.textContent = "Verificá el ambiente y revisá si existe una posible fuente de calor o riesgo.";
+      cambiarLuces("naranja", "Temperatura elevada");
+      mostrarNotif("🌡️ Temperatura elevada");
+      actualizarApp(
+        "Alta temperatura",
+        "64%",
+        "Control preventivo",
+        "Revisá equipos y la zona afectada.",
+        "Ruta libre en caso de empeorar.",
+        "Temperatura elevada en habitación."
+      );
+      sonarAlarma();
+      agregarHistorial("Se simuló una condición de alta temperatura en habitación.");
+    }
+
+    function volverNormal() {
+      limpiarAnimaciones();
+      reiniciarSensores();
+      detenerAlarma();
+      ocultarNotif();
+
+      estado.textContent = "Estado: Seguro";
+      estado.style.color = "#ffffff";
+      conexion.textContent = "🟢 Conectado";
+      nivelGas.textContent = "Nivel detectado: 12%";
+      accionSistema.textContent = "Acción actual: Monitoreando ambiente";
+      sensorActivo.textContent = "Sensor activo: Normal";
+      barraGas.style.width = "12%";
+      barraGas.style.background = "#22c55e";
+      recomendacionGeneral.textContent = "No se detectan peligros. El sistema sigue analizando el ambiente.";
+      cambiarLuces("verde", "Sistema estable");
+      actualizarApp(
+        "Seguro",
+        "12%",
+        "Monitoreando",
+        "Todo funciona correctamente.",
+        "Ruta principal libre.",
+        "Sin novedades."
+      );
+      agregarHistorial("El sistema volvió al estado normal.");
+    }
+
+    function probarSonido() {
+      sonarAlarma();
+      agregarHistorial("Se probó manualmente la sirena.");
+    }
+
+    cambiarLuces("verde", "Sistema estable");
+  </script>
 </body>
 </html>
