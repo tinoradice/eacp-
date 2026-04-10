@@ -2,127 +2,193 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Detector de Gas Inteligente</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detector Inteligente</title>
 
 <style>
 body {
-  font-family: Arial;
   margin: 0;
-  background: #111;
+  font-family: Arial;
+  background: #0f172a;
   color: white;
-  text-align: center;
+}
+
+nav {
+  background: #020617;
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+  position: sticky;
+  top: 0;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 header {
-  background: #c0392b;
+  text-align: center;
   padding: 30px;
+  background: linear-gradient(45deg, red, darkred);
 }
 
-section {
-  margin: 20px;
+.contenedor {
   padding: 20px;
-  background: #222;
+}
+
+.card {
+  background: #1e293b;
+  margin: 15px 0;
+  padding: 20px;
   border-radius: 15px;
 }
 
 h2 {
-  color: #ff6b6b;
+  color: #f87171;
 }
 
 button {
-  padding: 15px;
-  margin: 10px;
-  border: none;
+  padding: 12px;
   border-radius: 10px;
-  font-size: 16px;
+  border: none;
+  margin: 5px;
   cursor: pointer;
 }
 
-.peligro {
-  background: red;
-  color: white;
-}
-
-.normal {
-  background: green;
-  color: white;
-}
+.rojo {background: red; color:white;}
+.verde {background: green; color:white;}
+.naranja {background: orange; color:black;}
+.azul {background: #2563eb; color:white;}
 
 #estado {
-  font-size: 20px;
-  margin-top: 15px;
+  font-size: 22px;
+  margin-top: 10px;
 }
 
-#conexion {
-  color: lightgreen;
+.barra {
+  height: 20px;
+  background: #333;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.relleno {
+  height: 100%;
+  width: 10%;
+  background: green;
 }
 
 .parpadeo {
-  animation: parpadear 1s infinite;
+  animation: flash 1s infinite;
 }
 
-@keyframes parpadear {
-  0% {background: #111;}
-  50% {background: red;}
-  100% {background: #111;}
+@keyframes flash {
+  0% {background:#0f172a;}
+  50% {background:red;}
+  100% {background:#0f172a;}
+}
+
+footer {
+  text-align:center;
+  padding:20px;
 }
 </style>
-
 </head>
 
 <body>
 
+<nav>
+  <a href="#">Inicio</a>
+  <a href="#">Sistema</a>
+  <a href="#">App</a>
+</nav>
+
 <header>
   <h1>🚨 Detector Inteligente de Gas</h1>
-  <p>Sistema con app y salida de emergencia</p>
+  <p>Con sistema de emergencia y app</p>
 </header>
 
-<section>
-  <h2>Estado del sistema</h2>
-  <p id="conexion">🟢 Conectado</p>
-  <p id="estado">Estado: Seguro</p>
-</section>
+<div class="contenedor">
 
-<section>
-  <h2>Control</h2>
-  <button class="peligro" onclick="detectarGas()">Simular fuga 🚨</button>
-  <button class="normal" onclick="normal()">Volver a normal ✅</button>
-</section>
+<div class="card">
+<h2>Estado del sistema</h2>
+<p id="estado">Estado: Seguro</p>
+<p id="accion">Monitoreando ambiente</p>
 
-<section>
-  <h2>Información</h2>
-  <p>El sistema detecta gas y monóxido, activa alarmas y guía al usuario.</p>
-</section>
+<div class="barra">
+  <div class="relleno" id="barra"></div>
+</div>
+
+<button class="rojo" onclick="gas()">Fuga de gas</button>
+<button class="naranja" onclick="mono()">Monóxido</button>
+<button class="azul" onclick="fuego()">Incendio</button>
+<button class="verde" onclick="normal()">Normal</button>
+</div>
+
+<div class="card">
+<h2>App simulada 📱</h2>
+<p id="app">Todo en orden</p>
+</div>
+
+<div class="card">
+<h2>Información</h2>
+<p>El sistema detecta gases peligrosos y ayuda a evacuar.</p>
+</div>
+
+</div>
 
 <footer>
-  <p>Valentino Radice - 6°4°</p>
+Valentino Radice - 6°4°
 </footer>
 
 <audio id="alarma">
-  <source src="https://www.soundjay.com/alarm/alarm-clock-beep-01.mp3">
+<source src="https://www.soundjay.com/alarm/alarm-clock-beep-01.mp3">
 </audio>
 
 <script>
-function detectarGas() {
-  document.body.classList.add("parpadeo");
-  document.getElementById("estado").innerText = "🚨 PELIGRO: GAS DETECTADO";
-  document.getElementById("estado").style.color = "red";
-  document.getElementById("conexion").innerText = "🔴 Emergencia";
-  
-  document.getElementById("alarma").play();
+function sonar(){document.getElementById("alarma").play();}
 
-  alert("⚠️ Gas detectado. Evacuar inmediatamente.");
+function gas(){
+document.body.classList.add("parpadeo");
+estado.innerText="⚠️ Fuga de gas";
+accion.innerText="Ventilar y evacuar";
+barra.style.width="80%";
+barra.style.background="orange";
+app.innerText="Abrí ventanas y salí";
+sonar();
 }
 
-function normal() {
-  document.body.classList.remove("parpadeo");
-  document.body.style.background = "#111";
-  
-  document.getElementById("estado").innerText = "Estado: Seguro";
-  document.getElementById("estado").style.color = "white";
-  document.getElementById("conexion").innerText = "🟢 Conectado";
+function mono(){
+document.body.classList.add("parpadeo");
+estado.innerText="🚨 Monóxido detectado";
+accion.innerText="Evacuación inmediata";
+barra.style.width="90%";
+barra.style.background="red";
+app.innerText="Salí YA del lugar";
+sonar();
+}
 
-  document.getElementById("alarma").pause();
+function fuego(){
+document.body.classList.add("parpadeo");
+estado.innerText="🔥 Incendio";
+accion.innerText="Evacuar sin ventilar";
+barra.style.width="95%";
+barra.style.background="yellow";
+app.innerText="No abras ventanas";
+sonar();
+}
+
+function normal(){
+document.body.classList.remove("parpadeo");
+estado.innerText="Estado: Seguro";
+accion.innerText="Monitoreando";
+barra.style.width="10%";
+barra.style.background="green";
+app.innerText="Todo en orden";
+document.getElementById("alarma").pause();
 }
 </script>
 
