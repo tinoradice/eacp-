@@ -1,985 +1,220 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SentinelGas | Plataforma Inteligente de Seguridad</title>
-  <style>
-    :root{
-      --bg:#0f0f0f;
-      --surface:#181818;
-      --surface-2:#212121;
-      --border:#303030;
-      --text:#f1f1f1;
-      --muted:#aaaaaa;
-      --red:#ff4e45;
-      --orange:#ff9f1a;
-      --green:#22c55e;
-      --blue:#3b82f6;
-      --yellow:#facc15;
-      --radius:18px;
-      --shadow:0 10px 30px rgba(0,0,0,.25);
-    }
-
-    *{
-      box-sizing:border-box;
-      scroll-behavior:smooth;
-    }
-
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
-
-    a{
-      text-decoration:none;
-      color:inherit;
-    }
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:1000;
-      background:rgba(15,15,15,.95);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid var(--border);
-    }
-
-    .topbar-inner{
-      max-width:1280px;
-      margin:auto;
-      padding:14px 20px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:20px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:700;
-      font-size:20px;
-    }
-
-    .brand-logo{
-      width:38px;
-      height:38px;
-      border-radius:12px;
-      background:linear-gradient(135deg,var(--red),#b91c1c);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:18px;
-    }
-
-    .nav{
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-    }
-
-    .nav a{
-      color:var(--muted);
-      font-size:14px;
-      font-weight:700;
-      padding:8px 10px;
-      border-radius:10px;
-    }
-
-    .nav a:hover{
-      background:var(--surface-2);
-      color:var(--text);
-    }
-
-    .hero{
-      max-width:1280px;
-      margin:28px auto 20px;
-      padding:0 20px;
-      display:grid;
-      grid-template-columns:1.4fr .8fr;
-      gap:22px;
-    }
-
-    .hero-main, .hero-side{
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:24px;
-      box-shadow:var(--shadow);
-    }
-
-    .hero-main{
-      padding:34px;
-      background:
-        radial-gradient(circle at top right, rgba(255,78,69,.22), transparent 30%),
-        radial-gradient(circle at bottom left, rgba(59,130,246,.18), transparent 30%),
-        var(--surface);
-    }
-
-    .eyebrow{
-      display:inline-block;
-      font-size:12px;
-      font-weight:700;
-      color:#ffd4d1;
-      background:#2a1615;
-      padding:8px 12px;
-      border-radius:999px;
-      margin-bottom:18px;
-    }
-
-    .hero h1{
-      margin:0 0 14px;
-      font-size:44px;
-      line-height:1.08;
-    }
-
-    .hero p{
-      color:#d4d4d4;
-      line-height:1.7;
-      font-size:17px;
-      margin:0 0 16px;
-    }
-
-    .hero-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-top:22px;
-    }
-
-    .btn{
-      border:none;
-      border-radius:14px;
-      padding:14px 18px;
-      font-weight:700;
-      cursor:pointer;
-      font-size:14px;
-      transition:.2s ease;
-    }
-
-    .btn:hover{
-      transform:translateY(-2px);
-      opacity:.95;
-    }
-
-    .btn-primary{
-      background:var(--red);
-      color:white;
-    }
-
-    .btn-secondary{
-      background:var(--surface-2);
-      color:white;
-      border:1px solid var(--border);
-    }
-
-    .hero-side{
-      padding:24px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      gap:18px;
-    }
-
-    .side-stat{
-      background:var(--surface-2);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:18px;
-    }
-
-    .side-stat small{
-      display:block;
-      color:var(--muted);
-      margin-bottom:8px;
-      font-weight:700;
-    }
-
-    .side-stat strong{
-      font-size:30px;
-    }
-
-    .layout{
-      max-width:1280px;
-      margin:auto;
-      padding:0 20px 34px;
-      display:grid;
-      grid-template-columns:260px 1fr;
-      gap:22px;
-    }
-
-    .sidebar, .content-card{
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:24px;
-      box-shadow:var(--shadow);
-    }
-
-    .sidebar{
-      padding:18px;
-      height:max-content;
-      position:sticky;
-      top:82px;
-    }
-
-    .sidebar h3{
-      margin:6px 0 14px;
-      font-size:16px;
-      color:#fff;
-    }
-
-    .side-links{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-
-    .side-links a{
-      padding:12px 14px;
-      border-radius:14px;
-      color:#d4d4d4;
-      font-weight:700;
-      background:transparent;
-    }
-
-    .side-links a:hover{
-      background:var(--surface-2);
-      color:#fff;
-    }
-
-    .main{
-      display:grid;
-      gap:22px;
-    }
-
-    .content-card{
-      padding:24px;
-    }
-
-    .section-title{
-      margin:0 0 8px;
-      font-size:28px;
-    }
-
-    .section-sub{
-      margin:0 0 20px;
-      color:var(--muted);
-      line-height:1.6;
-    }
-
-    .stats-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:14px;
-    }
-
-    .stat-card{
-      background:var(--surface-2);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:18px;
-    }
-
-    .stat-card small{
-      display:block;
-      color:var(--muted);
-      margin-bottom:8px;
-      font-weight:700;
-    }
-
-    .stat-card strong{
-      font-size:28px;
-    }
-
-    .dashboard{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:18px;
-    }
-
-    .panel{
-      background:var(--surface-2);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:20px;
-    }
-
-    .status-big{
-      font-size:30px;
-      font-weight:800;
-      margin:6px 0 10px;
-    }
-
-    .status-line{
-      font-size:16px;
-      color:#d8d8d8;
-      margin:8px 0;
-    }
-
-    .bar{
-      width:100%;
-      height:22px;
-      background:#2d2d2d;
-      border-radius:999px;
-      overflow:hidden;
-      margin:14px 0;
-    }
-
-    .fill{
-      width:14%;
-      height:100%;
-      background:var(--green);
-      transition:.35s ease;
-    }
-
-    .lights{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-top:12px;
-      flex-wrap:wrap;
-    }
-
-    .light{
-      width:22px;
-      height:22px;
-      border-radius:50%;
-      background:#333;
-    }
-
-    .light.green{background:var(--green); box-shadow:0 0 18px var(--green);}
-    .light.orange{background:var(--orange); box-shadow:0 0 18px var(--orange);}
-    .light.red{background:var(--red); box-shadow:0 0 18px var(--red);}
-    .light.yellow{background:var(--yellow); box-shadow:0 0 18px var(--yellow);}
-
-    .controls{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:10px;
-      margin-top:16px;
-    }
-
-    .b-red{background:var(--red); color:white;}
-    .b-orange{background:var(--orange); color:#111;}
-    .b-blue{background:var(--blue); color:white;}
-    .b-yellow{background:var(--yellow); color:#111;}
-    .b-green{background:var(--green); color:white;}
-
-    .mobile-ui{
-      width:290px;
-      max-width:100%;
-      margin:auto;
-      background:#000;
-      border:3px solid #2f2f2f;
-      border-radius:28px;
-      padding:12px;
-    }
-
-    .screen{
-      background:#fff;
-      color:#111;
-      border-radius:18px;
-      padding:16px;
-      min-height:350px;
-    }
-
-    .notif{
-      background:#dcfce7;
-      color:#166534;
-      border-radius:12px;
-      padding:10px 12px;
-      font-weight:700;
-      margin-bottom:12px;
-    }
-
-    .notif.alert{
-      background:#fee2e2;
-      color:#991b1b;
-    }
-
-    .app-box{
-      border:1px solid #e5e7eb;
-      border-radius:12px;
-      padding:12px;
-      margin-bottom:10px;
-      background:#fff;
-      line-height:1.55;
-    }
-
-    .grid-2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-    }
-
-    .table-wrap{
-      overflow:auto;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-    }
-
-    th, td{
-      border:1px solid #3a3a3a;
-      padding:12px;
-      text-align:left;
-      font-size:14px;
-    }
-
-    th{
-      background:#202020;
-      color:#fff;
-    }
-
-    .history{
-      background:var(--surface-2);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:12px;
-      max-height:300px;
-      overflow:auto;
-    }
-
-    .event{
-      padding:12px 10px;
-      border-bottom:1px solid var(--border);
-      line-height:1.5;
-      font-size:14px;
-    }
-
-    .event:last-child{
-      border-bottom:none;
-    }
-
-    .footer{
-      max-width:1280px;
-      margin:0 auto 34px;
-      padding:0 20px;
-    }
-
-    .footer-box{
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:24px;
-      padding:24px;
-      text-align:center;
-      color:#cfcfcf;
-    }
-
-    .flash-red{animation:flashRed 1s infinite;}
-    .flash-orange{animation:flashOrange 1s infinite;}
-    .flash-yellow{animation:flashYellow 1s infinite;}
-
-    @keyframes flashRed{
-      0%{background:var(--bg);}
-      50%{background:#3a1010;}
-      100%{background:var(--bg);}
-    }
-    @keyframes flashOrange{
-      0%{background:var(--bg);}
-      50%{background:#3a2310;}
-      100%{background:var(--bg);}
-    }
-    @keyframes flashYellow{
-      0%{background:var(--bg);}
-      50%{background:#3a3310;}
-      100%{background:var(--bg);}
-    }
-
-    @media (max-width:1100px){
-      .hero{
-        grid-template-columns:1fr;
-      }
-      .layout{
-        grid-template-columns:1fr;
-      }
-      .sidebar{
-        position:static;
-      }
-      .stats-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-      .dashboard{
-        grid-template-columns:1fr;
-      }
-      .grid-2{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width:700px){
-      .hero h1{
-        font-size:32px;
-      }
-      .stats-grid{
-        grid-template-columns:1fr;
-      }
-      .controls{
-        grid-template-columns:1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SentinelGas</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:black;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  width:100%;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(10px);
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  z-index:1000;
+}
+
+nav a{
+  color:#aaa;
+  margin-left:15px;
+}
+
+section{
+  padding:100px 20px;
+  max-width:1100px;
+  margin:auto;
+  opacity:0;
+  transform:translateY(50px);
+  transition:1s;
+}
+
+.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+}
+
+.hero h1{
+  font-size:60px;
+}
+
+.hero p{
+  color:#aaa;
+  font-size:20px;
+}
+
+.btn{
+  padding:15px 30px;
+  margin-top:20px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+}
+
+.btn-main{
+  background:white;
+  color:black;
+}
+
+/* IMAGEN */
+img{
+  width:100%;
+  border-radius:20px;
+  margin-top:30px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:#111;
+  padding:20px;
+  border-radius:15px;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+}
+
+/* PRECIOS */
+.price{
+  color:#22c55e;
+  font-size:30px;
+}
+
+/* TABLA */
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+td,th{
+  border:1px solid #333;
+  padding:10px;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  color:#aaa;
+  padding:50px;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="brand-logo">🚨</div>
-        <div>SentinelGas</div>
-      </div>
-      <div class="nav">
-        <a href="#overview">Overview</a>
-        <a href="#dashboard">Dashboard</a>
-        <a href="#mobile">App</a>
-        <a href="#protocols">Protocolos</a>
-        <a href="#history">Historial</a>
-      </div>
+<nav>
+  <div>SentinelGas</div>
+  <div>
+    <a href="#producto">Producto</a>
+    <a href="#planes">Planes</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Tu casa. Protegida en tiempo real.</h1>
+  <p>Detección inteligente de gas, monóxido e incendios</p>
+  <button class="btn btn-main">Contratar ahora</button>
+</section>
+
+<!-- PRODUCTO -->
+<section id="producto">
+  <h2>Diseñado para prevenir riesgos reales</h2>
+  <img src="producto.jpg">
+  <p>Sensores inteligentes conectados a una app que actúa antes de que el peligro ocurra.</p>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <h2>Características</h2>
+  <div class="grid">
+    <div class="card">Detección en tiempo real</div>
+    <div class="card">Alertas automáticas</div>
+    <div class="card">App móvil</div>
+    <div class="card">Evacuación guiada</div>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section id="planes">
+  <h2>Planes</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Básico</h3>
+      <p class="price">$50.000</p>
+      <p>Sensor + app</p>
+    </div>
+    <div class="card">
+      <h3>Pro</h3>
+      <p class="price">$120.000</p>
+      <p>Todo incluido</p>
+    </div>
+    <div class="card">
+      <h3>Empresa</h3>
+      <p class="price">$250.000</p>
+      <p>Monitoreo total</p>
     </div>
   </div>
+</section>
 
-  <section class="hero">
-    <div class="hero-main">
-      <div class="eyebrow">PLATAFORMA DE SEGURIDAD INTELIGENTE</div>
-      <h1>Detección profesional de gas, monóxido y riesgos térmicos</h1>
-      <p>
-        Sistema integral diseñado para monitorear ambientes, detectar amenazas críticas
-        y activar una respuesta inmediata con panel central, app móvil y evacuación guiada.
-      </p>
-      <p>
-        Inspirado en interfaces premium, esta plataforma presenta la información de forma clara,
-        moderna y confiable para una experiencia visual de nivel profesional.
-      </p>
-      <div class="hero-actions">
-        <button class="btn btn-primary" onclick="document.getElementById('dashboard').scrollIntoView()">Ver dashboard</button>
-        <button class="btn btn-secondary" onclick="simularGas()">Probar simulación</button>
-      </div>
-    </div>
+<!-- COMPARACION -->
+<section>
+  <h2>Por qué SentinelGas</h2>
+  <table>
+    <tr>
+      <th></th>
+      <th>SentinelGas</th>
+      <th>Común</th>
+    </tr>
+    <tr>
+      <td>App</td><td>✔</td><td>❌</td>
+    </tr>
+    <tr>
+      <td>Alertas</td><td>✔</td><td>❌</td>
+    </tr>
+  </table>
+</section>
 
-    <div class="hero-side">
-      <div class="side-stat">
-        <small>Estado global</small>
-        <strong id="heroEstado">Seguro</strong>
-      </div>
-      <div class="side-stat">
-        <small>Última actualización</small>
-        <strong id="heroHora">--:--:--</strong>
-      </div>
-      <div class="side-stat">
-        <small>Disponibilidad del sistema</small>
-        <strong>99.9%</strong>
-      </div>
-    </div>
-  </section>
+<footer>
+Valentino Radice — Proyecto final
+</footer>
 
-  <section class="layout">
-    <aside class="sidebar">
-      <h3>Navegación</h3>
-      <div class="side-links">
-        <a href="#overview">Resumen</a>
-        <a href="#dashboard">Centro de control</a>
-        <a href="#mobile">App móvil</a>
-        <a href="#sensors">Sensores</a>
-        <a href="#protocols">Protocolos</a>
-        <a href="#history">Historial</a>
-      </div>
-    </aside>
+<script>
+// ANIMACIONES
+const sections = document.querySelectorAll("section");
 
-    <main class="main">
-      <section class="content-card" id="overview">
-        <h2 class="section-title">Resumen ejecutivo</h2>
-        <p class="section-sub">
-          Esta solución combina sensores, automatización y una interfaz premium para detectar
-          situaciones peligrosas y asistir al usuario con decisiones claras y rápidas.
-        </p>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <small>Riesgos monitoreados</small>
-            <strong>4</strong>
-          </div>
-          <div class="stat-card">
-            <small>Canales de alerta</small>
-            <strong>3</strong>
-          </div>
-          <div class="stat-card">
-            <small>Estado actual</small>
-            <strong id="miniEstado">Normal</strong>
-          </div>
-          <div class="stat-card">
-            <small>Tiempo de respuesta</small>
-            <strong>Inmediato</strong>
-          </div>
-        </div>
-      </section>
-
-      <section class="content-card" id="dashboard">
-        <h2 class="section-title">Centro de control</h2>
-        <p class="section-sub">
-          Panel de monitoreo principal con visualización en tiempo real del estado del sistema.
-        </p>
-
-        <div class="dashboard">
-          <div class="panel">
-            <div class="status-line" id="conexion">🟢 Sistema conectado</div>
-            <div class="status-big" id="estado">Estado: Seguro</div>
-            <div class="status-line" id="accion">Acción actual: Monitoreando ambiente</div>
-            <div class="status-line" id="nivel">Nivel detectado: 14%</div>
-            <div class="status-line" id="sensorActivo">Sensor activo: Normal</div>
-            <div class="status-line" id="hora">Hora: --:--:--</div>
-
-            <div class="bar">
-              <div class="fill" id="barra"></div>
-            </div>
-
-            <div class="lights">
-              <div class="light green" id="l1"></div>
-              <div id="sirenaTxt"><strong>Sistema estable</strong></div>
-              <div class="light green" id="l2"></div>
-            </div>
-
-            <div class="controls">
-              <button class="btn b-orange" onclick="simularGas()">Fuga de gas</button>
-              <button class="btn b-red" onclick="simularMonoxido()">Monóxido</button>
-              <button class="btn b-blue" onclick="simularIncendio()">Incendio</button>
-              <button class="btn b-yellow" onclick="simularTemperatura()">Alta temperatura</button>
-              <button class="btn b-green" onclick="volverNormal()">Volver a normal</button>
-            </div>
-          </div>
-
-          <div class="panel">
-            <h3 style="margin-top:0;">Respuesta inteligente</h3>
-            <p id="recomendacion">
-              No se detectan amenazas. El sistema mantiene monitoreo constante y todos los módulos están operativos.
-            </p>
-            <ul style="line-height:1.8; color:#d7d7d7;">
-              <li>Monitoreo continuo del ambiente</li>
-              <li>Clasificación automática del riesgo</li>
-              <li>Actualización instantánea de la app</li>
-              <li>Generación de historial de eventos</li>
-              <li>Asistencia en protocolos de evacuación</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="content-card" id="mobile">
-        <h2 class="section-title">App móvil corporativa</h2>
-        <p class="section-sub">
-          Vista simulada de la interfaz móvil que recibe alertas y muestra instrucciones al usuario.
-        </p>
-
-        <div class="mobile-ui">
-          <div class="screen">
-            <div class="notif" id="notif">✅ Sistema en condiciones normales</div>
-            <div class="app-box"><strong>Estado:</strong> <span id="appEstado">Seguro</span></div>
-            <div class="app-box"><strong>Nivel:</strong> <span id="appNivel">14%</span></div>
-            <div class="app-box"><strong>Acción:</strong> <span id="appAccion">Monitoreando</span></div>
-            <div class="app-box"><strong>Instrucción:</strong> <span id="appInstruccion">No se requiere intervención.</span></div>
-            <div class="app-box"><strong>Ruta sugerida:</strong> <span id="appRuta">Ruta principal libre.</span></div>
-            <div class="app-box"><strong>Último evento:</strong> <span id="appEvento">Sin novedades.</span></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="content-card" id="sensors">
-        <h2 class="section-title">Matriz de sensores</h2>
-        <p class="section-sub">
-          Tabla de lectura conceptual de los componentes involucrados en la detección.
-        </p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Sensor</th>
-                <th>Zona</th>
-                <th>Función</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>MQ / Gas</td>
-                <td>Cocina</td>
-                <td>Detección de fugas</td>
-                <td id="tGas">Normal</td>
-              </tr>
-              <tr>
-                <td>CO</td>
-                <td>Living</td>
-                <td>Detección de monóxido</td>
-                <td id="tCO">Normal</td>
-              </tr>
-              <tr>
-                <td>Temperatura</td>
-                <td>Habitación</td>
-                <td>Advertencia térmica</td>
-                <td id="tTemp">Normal</td>
-              </tr>
-              <tr>
-                <td>Humo / Riesgo</td>
-                <td>Pasillo</td>
-                <td>Detección de incendio</td>
-                <td id="tFire">Normal</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="content-card" id="protocols">
-        <h2 class="section-title">Protocolos operativos</h2>
-        <p class="section-sub">
-          Guía de respuesta para cada escenario detectado por el sistema.
-        </p>
-        <div class="grid-2">
-          <div class="panel">
-            <h3 style="margin-top:0;">Qué hacer</h3>
-            <ul>
-              <li>Ventilar ante una fuga de gas.</li>
-              <li>Evacuar de inmediato ante monóxido.</li>
-              <li>Salir por la ruta segura ante incendio.</li>
-              <li>Revisar origen del calor ante temperatura elevada.</li>
-            </ul>
-          </div>
-          <div class="panel">
-            <h3 style="margin-top:0;">Qué evitar</h3>
-            <ul>
-              <li>No encender luces ni interruptores ante gas.</li>
-              <li>No permanecer en el ambiente con monóxido.</li>
-              <li>No volver a entrar si hay incendio.</li>
-              <li>No ignorar alertas preventivas.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="content-card" id="history">
-        <h2 class="section-title">Historial del sistema</h2>
-        <p class="section-sub">
-          Registro de eventos generados desde el centro de control.
-        </p>
-        <div class="history" id="timeline">
-          <div class="event">Sistema iniciado correctamente.</div>
-        </div>
-      </section>
-    </main>
-  </section>
-
-  <section class="footer">
-    <div class="footer-box">
-      <p><strong>Valentino Radice - 6°4°</strong></p>
-      <p>SentinelGas · Plataforma inteligente de detección de gas y monóxido con asistencia digital</p>
-    </div>
-  </section>
-
-  <audio id="audio" preload="auto">
-    <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
-    const estado = document.getElementById("estado");
-    const conexion = document.getElementById("conexion");
-    const accion = document.getElementById("accion");
-    const nivel = document.getElementById("nivel");
-    const sensorActivo = document.getElementById("sensorActivo");
-    const hora = document.getElementById("hora");
-    const barra = document.getElementById("barra");
-    const recomendacion = document.getElementById("recomendacion");
-    const notif = document.getElementById("notif");
-    const appEstado = document.getElementById("appEstado");
-    const appNivel = document.getElementById("appNivel");
-    const appAccion = document.getElementById("appAccion");
-    const appInstruccion = document.getElementById("appInstruccion");
-    const appRuta = document.getElementById("appRuta");
-    const appEvento = document.getElementById("appEvento");
-    const timeline = document.getElementById("timeline");
-    const audio = document.getElementById("audio");
-    const heroHora = document.getElementById("heroHora");
-    const heroEstado = document.getElementById("heroEstado");
-    const miniEstado = document.getElementById("miniEstado");
-
-    const l1 = document.getElementById("l1");
-    const l2 = document.getElementById("l2");
-    const sirenaTxt = document.getElementById("sirenaTxt");
-
-    const tGas = document.getElementById("tGas");
-    const tCO = document.getElementById("tCO");
-    const tTemp = document.getElementById("tTemp");
-    const tFire = document.getElementById("tFire");
-
-    function setHora(){
-      const now = new Date().toLocaleTimeString();
-      hora.textContent = "Hora: " + now;
-      heroHora.textContent = now;
+window.addEventListener("scroll",()=>{
+  sections.forEach(sec=>{
+    const top = sec.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      sec.classList.add("show");
     }
-    setHora();
-    setInterval(setHora,1000);
+  });
+});
+</script>
 
-    function addEvent(text){
-      const now = new Date().toLocaleTimeString();
-      const div = document.createElement("div");
-      div.className = "event";
-      div.textContent = "[" + now + "] " + text;
-      timeline.prepend(div);
-    }
-
-    function stopAudio(){
-      audio.pause();
-      audio.currentTime = 0;
-    }
-
-    function playAudio(){
-      audio.currentTime = 0;
-      audio.play().catch(()=>{});
-    }
-
-    function clearFlashes(){
-      document.body.classList.remove("flash-red","flash-orange","flash-yellow");
-    }
-
-    function clearTable(){
-      tGas.textContent = "Normal";
-      tCO.textContent = "Normal";
-      tTemp.textContent = "Normal";
-      tFire.textContent = "Normal";
-    }
-
-    function setLights(color, text){
-      l1.className = "light " + color;
-      l2.className = "light " + color;
-      sirenaTxt.innerHTML = "<strong>" + text + "</strong>";
-    }
-
-    function updateApp(a,b,c,d,e,f,isAlert){
-      appEstado.textContent = a;
-      appNivel.textContent = b;
-      appAccion.textContent = c;
-      appInstruccion.textContent = d;
-      appRuta.textContent = e;
-      appEvento.textContent = f;
-      notif.textContent = isAlert ? "⚠️ Emergencia detectada" : "✅ Sistema en condiciones normales";
-      notif.className = isAlert ? "notif alert" : "notif";
-    }
-
-    function setGeneralState(text){
-      heroEstado.textContent = text;
-      miniEstado.textContent = text;
-    }
-
-    function simularGas(){
-      clearFlashes();
-      clearTable();
-      document.body.classList.add("flash-orange");
-      tGas.textContent = "Alerta";
-
-      conexion.textContent = "🟠 Alerta activa";
-      estado.textContent = "Estado: Fuga de gas detectada";
-      estado.style.color = "#ffb347";
-      accion.textContent = "Acción actual: Ventilar y evacuar";
-      nivel.textContent = "Nivel detectado: 82%";
-      sensorActivo.textContent = "Sensor activo: Cocina / Gas";
-      barra.style.width = "82%";
-      barra.style.background = "#ff9f1a";
-      recomendacion.textContent = "Abrí ventanas, evitá chispas, no uses interruptores y salí del lugar con cuidado.";
-      setLights("orange","Alerta de gas");
-      setGeneralState("Alerta");
-      updateApp("Fuga de gas","82%","Ventilar y evacuar","Abrí ventanas y no prendas luces.","Ruta principal libre.","Fuga detectada en cocina.",true);
-      playAudio();
-      addEvent("Se simuló una fuga de gas en cocina.");
-    }
-
-    function simularMonoxido(){
-      clearFlashes();
-      clearTable();
-      document.body.classList.add("flash-red");
-      tCO.textContent = "Crítico";
-
-      conexion.textContent = "🔴 Emergencia";
-      estado.textContent = "Estado: Monóxido detectado";
-      estado.style.color = "#ff6b6b";
-      accion.textContent = "Acción actual: Evacuación inmediata";
-      nivel.textContent = "Nivel detectado: 91%";
-      sensorActivo.textContent = "Sensor activo: Living / CO";
-      barra.style.width = "91%";
-      barra.style.background = "#ff4e45";
-      recomendacion.textContent = "Salí ya mismo al exterior y buscá aire fresco.";
-      setLights("red","Monóxido detectado");
-      setGeneralState("Crítico");
-      updateApp("Monóxido","91%","Salir ya","No permanezcas en el lugar.","Ruta rápida a salida.","CO detectado en living.",true);
-      playAudio();
-      addEvent("Se simuló detección de monóxido en living.");
-    }
-
-    function simularIncendio(){
-      clearFlashes();
-      clearTable();
-      document.body.classList.add("flash-red");
-      tFire.textContent = "Incendio";
-
-      conexion.textContent = "🔴 Emergencia crítica";
-      estado.textContent = "Estado: Incendio detectado";
-      estado.style.color = "#facc15";
-      accion.textContent = "Acción actual: Evacuación total";
-      nivel.textContent = "Nivel detectado: 97%";
-      sensorActivo.textContent = "Sensor activo: Pasillo / Humo";
-      barra.style.width = "97%";
-      barra.style.background = "#facc15";
-      recomendacion.textContent = "Evacuá por la vía segura y no regreses al ambiente afectado.";
-      setLights("red","Incendio crítico");
-      setGeneralState("Crítico");
-      updateApp("Incendio","97%","Evacuar ya","No vuelvas atrás.","Salida principal habilitada.","Incendio detectado en pasillo.",true);
-      playAudio();
-      addEvent("Se simuló un incendio en pasillo.");
-    }
-
-    function simularTemperatura(){
-      clearFlashes();
-      clearTable();
-      document.body.classList.add("flash-yellow");
-      tTemp.textContent = "Precaución";
-
-      conexion.textContent = "🟡 Precaución";
-      estado.textContent = "Estado: Alta temperatura detectada";
-      estado.style.color = "#facc15";
-      accion.textContent = "Acción actual: Supervisión preventiva";
-      nivel.textContent = "Nivel detectado: 63%";
-      sensorActivo.textContent = "Sensor activo: Habitación / Temperatura";
-      barra.style.width = "63%";
-      barra.style.background = "#facc15";
-      recomendacion.textContent = "Revisá el ambiente y preparate por si el riesgo aumenta.";
-      setLights("yellow","Temperatura elevada");
-      setGeneralState("Precaución");
-      updateApp("Alta temperatura","63%","Control preventivo","Revisá la zona afectada.","Ruta libre.","Temperatura alta en habitación.",true);
-      playAudio();
-      addEvent("Se simuló alta temperatura en habitación.");
-    }
-
-    function volverNormal(){
-      clearFlashes();
-      clearTable();
-      stopAudio();
-
-      conexion.textContent = "🟢 Sistema conectado";
-      estado.textContent = "Estado: Seguro";
-      estado.style.color = "#f1f1f1";
-      accion.textContent = "Acción actual: Monitoreando ambiente";
-      nivel.textContent = "Nivel detectado: 14%";
-      sensorActivo.textContent = "Sensor activo: Normal";
-      barra.style.width = "14%";
-      barra.style.background = "#22c55e";
-      recomendacion.textContent = "No se detectan amenazas. El sistema mantiene monitoreo constante y todos los módulos están operativos.";
-      setLights("green","Sistema estable");
-      setGeneralState("Seguro");
-      updateApp("Seguro","14%","Monitoreando","No se requiere intervención.","Ruta principal libre.","Sin novedades.",false);
-      addEvent("El sistema volvió a estado normal.");
-    }
-
-    setLights("green","Sistema estable");
-  </script>
 </body>
 </html>
