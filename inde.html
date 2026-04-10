@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detector de Gas Inteligente</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #222;
+    }
+
+    header {
+      background: #c0392b;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    section {
+      background: white;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    h2 {
+      color: #c0392b;
+    }
+
+    ul, ol {
+      padding-left: 22px;
+    }
+
+    button {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 14px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #c0392b;
+    }
+
+    #estado {
+      font-weight: bold;
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #ddd;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Sistema Inteligente de Detección de Monóxido de Carbono y Gas</h1>
+  <p>Con aplicación móvil y salida de emergencia</p>
+</header>
+
+<section>
+  <h2>Introducción</h2>
+  <p>
+    En viviendas, escuelas y talleres existen riesgos asociados a fugas de gas
+    y a la intoxicación por monóxido de carbono. Estos peligros pueden provocar
+    malestar físico, incendios e incluso la muerte.
+  </p>
+</section>
+
+<section>
+  <h2>Objetivo del proyecto</h2>
+  <ul>
+    <li>Detectar la presencia de monóxido de carbono y metano.</li>
+    <li>Emitir una alarma sonora inmediata.</li>
+    <li>Enviar una alerta al teléfono celular.</li>
+    <li>Brindar instrucciones en tiempo real al usuario.</li>
+    <li>Incorporar un sistema mecánico de salida de emergencia.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Descripción del sistema</h2>
+  <ul>
+    <li><strong>Módulo de detección:</strong> sensores de CO, gas y temperatura.</li>
+    <li><strong>Módulo de control:</strong> microcontrolador que procesa la información.</li>
+    <li><strong>Aplicación móvil:</strong> recibe alertas y guía al usuario.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Funcionamiento</h2>
+  <ol>
+    <li>Los sensores analizan el ambiente constantemente.</li>
+    <li>Detectan niveles peligrosos.</li>
+    <li>Se activa la alarma.</li>
+    <li>Se envía una señal a la aplicación.</li>
+    <li>El usuario recibe instrucciones para actuar.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Sistema de salida de emergencia</h2>
+  <ul>
+    <li>Ventanas automáticas.</li>
+    <li>Puertas con cierre magnético.</li>
+    <li>Rejas con liberación automática.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Diferenciación de riesgos</h2>
+  <ul>
+    <li><strong>Fuga de gas:</strong> se prioriza la ventilación.</li>
+    <li><strong>Incendio:</strong> se prioriza la evacuación.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ventajas</h2>
+  <ul>
+    <li>Mayor seguridad.</li>
+    <li>Respuesta automática.</li>
+    <li>Notificación remota.</li>
+    <li>Asistencia al usuario.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Desventajas</h2>
+  <ul>
+    <li>Dependencia tecnológica.</li>
+    <li>Posibles falsas alarmas.</li>
+    <li>Mantenimiento necesario.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Innovación</h2>
+  <p>
+    El sistema incluye una aplicación que no solo alerta,
+    sino que guía al usuario en tiempo real ante una emergencia.
+  </p>
+</section>
+
+<section>
+  <h2>Simulación</h2>
+  <button onclick="detectarGas()">Simular detección de gas 🚨</button>
+  <button onclick="normal()">Volver a estado normal ✅</button>
+  <p id="estado">Estado: Seguro</p>
+</section>
+
+<footer>
+  <p>Valentino Radice - 6°4°</p>
+</footer>
+
+<script>
+function detectarGas() {
+  document.body.style.background = "#ffd6d6";
+  document.getElementById("estado").innerText = "Estado: ¡PELIGRO!";
+  alert("⚠️ Gas detectado. Ventilar y evacuar.");
+}
+
+function normal() {
+  document.body.style.background = "#f4f4f4";
+  document.getElementById("estado").innerText = "Estado: Seguro";
+}
+</script>
+
+</body>
+</html>
