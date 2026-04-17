@@ -15,6 +15,10 @@
   --accent: #ffffff;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   background: linear-gradient(180deg, #0b0b0c, #111214 55%, #16171a);
@@ -77,8 +81,7 @@ nav {
 .home-overlay {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at center, rgba(255,255,255,0.06), transparent 28%);
+  background: radial-gradient(circle at center, rgba(255,255,255,0.06), transparent 28%);
   pointer-events: none;
 }
 
@@ -250,6 +253,32 @@ nav {
   font-size: 17px;
 }
 
+/* CONTACT BIG */
+.contact-grid-big {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+.contact-box {
+  background: linear-gradient(180deg, var(--card), var(--card-2));
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  padding: 34px 28px;
+  min-height: 240px;
+}
+
+.contact-box h3 {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.contact-box p {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.8;
+}
+
 /* CTA */
 .cta-section {
   padding: 0 24px 100px;
@@ -279,32 +308,6 @@ nav {
   font-size: 19px;
 }
 
-/* CONTACT BIG */
-.contact-grid-big {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 26px;
-}
-
-.contact-box {
-  background: linear-gradient(180deg, var(--card), var(--card-2));
-  border: 1px solid var(--line);
-  border-radius: 30px;
-  padding: 34px 28px;
-  min-height: 240px;
-}
-
-.contact-box h3 {
-  font-size: 32px;
-  margin-bottom: 16px;
-}
-
-.contact-box p {
-  color: var(--muted);
-  font-size: 18px;
-  line-height: 1.8;
-}
-
 /* FOOTER */
 footer {
   text-align: center;
@@ -316,6 +319,18 @@ footer {
 
 footer p + p {
   margin-top: 8px;
+}
+
+/* ANIMATIONS */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.8s ease;
+}
+
+.fade-up.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* RESPONSIVE */
@@ -366,15 +381,4 @@ footer p + p {
   .image-box img {
     height: 240px;
   }
-}
-/* ANIMACIONES */
-.fade-up {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: 0.8s ease;
-}
-
-.fade-up.active {
-  opacity: 1;
-  transform: translateY(0);
 }
