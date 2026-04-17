@@ -1,517 +1,108 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SentinelGas - Sistema inteligente de detección</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #08121a, #0f2f3b, #123f4d);
-      color: white;
-      line-height: 1.5;
-    }
-
-    header {
-      padding: 60px 20px 40px;
-      text-align: center;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.1));
-    }
-
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
-
-    header p {
-      font-size: 1.2rem;
-      color: #d7f7ff;
-    }
-
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(5, 16, 24, 0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 18px;
-      padding: 15px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.2s;
-    }
-
-    nav a:hover {
-      color: #79f2ff;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 1150px;
-      margin: auto;
-      padding: 30px 0;
-    }
-
-    section {
-      margin-bottom: 28px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-    }
-
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 14px;
-      color: #8ff6ff;
-    }
-
-    h3 {
-      margin-bottom: 8px;
-      color: #c3fbff;
-    }
-
-    p, li {
-      font-size: 1rem;
-      color: #eefcff;
-    }
-
-    ul, ol {
-      padding-left: 20px;
-      margin-top: 10px;
-    }
-
-    .hero-card {
-      text-align: center;
-      padding: 35px 20px;
-      background: linear-gradient(135deg, rgba(0, 255, 200, 0.12), rgba(255,255,255,0.06));
-      border-radius: 20px;
-    }
-
-    .hero-card h2 {
-      font-size: 2.3rem;
-      margin-bottom: 10px;
-    }
-
-    .hero-card p {
-      max-width: 800px;
-      margin: auto;
-    }
-
-    .grid-2, .grid-3, .grid-4 {
-      display: grid;
-      gap: 18px;
-      margin-top: 18px;
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-
-    .grid-4 {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-
-    .card {
-      background: rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .estado-box {
-      text-align: center;
-      padding: 26px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.09);
-      margin-top: 18px;
-    }
-
-    .estado-label {
-      font-size: 1rem;
-      color: #d4f8ff;
-    }
-
-    .estado-valor {
-      font-size: 2rem;
-      font-weight: bold;
-      margin: 10px 0;
-    }
-
-    .estado-detalle {
-      color: #e6fcff;
-    }
-
-    .botones {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    button {
-      border: none;
-      border-radius: 16px;
-      padding: 18px;
-      font-size: 1rem;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      transition: 0.2s;
-      min-height: 70px;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      opacity: 0.95;
-    }
-
-    .btn-gas {
-      background: #10b8c6;
-    }
-
-    .btn-co {
-      background: #f59e0b;
-    }
-
-    .btn-evac {
-      background: #3b82f6;
-    }
-
-    .btn-reset {
-      background: #22c55e;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(143, 246, 255, 0.14);
-      color: #a9fbff;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    .contacto a {
-      color: #9efbff;
-      text-decoration: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px 15px 40px;
-      color: #d8f8ff;
-    }
-
-    .peligro {
-      background: linear-gradient(to bottom, #220909, #5d1313, #7a1f1f);
-    }
-
-    .alerta {
-      background: linear-gradient(to bottom, #2a1d05, #6f4a07, #8a5a08);
-    }
-
-    .seguro {
-      background: linear-gradient(to bottom, #08121a, #0f2f3b, #123f4d);
-    }
-
-    @media (max-width: 700px) {
-      header h1 {
-        font-size: 2.3rem;
-      }
-
-      h2 {
-        font-size: 1.6rem;
-      }
-
-      nav ul {
-        gap: 10px;
-      }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SentinelGas</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="seguro">
+<body>
 
-  <header>
-    <h1>SentinelGas</h1>
-    <p>Sistema inteligente de detección de gas y monóxido de carbono</p>
-  </header>
+<nav>
+  <div class="logo">Sentinel<span>Gas</span></div>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="proyecto.html">Proyecto</a>
+    <a href="equipo.html">Equipo</a>
+    <a href="contacto.html">Contacto</a>
+  </div>
+</nav>
 
-  <nav>
-    <ul>
-      <li><a href="#proyecto">Proyecto</a></li>
-      <li><a href="#funcionamiento">Funcionamiento</a></li>
-      <li><a href="#tecnologia">Tecnología</a></li>
-      <li><a href="#impacto">Impacto</a></li>
-      <li><a href="#equipo">Equipo</a></li>
-      <li><a href="#simulacion">Simulación</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-  </nav>
+<section class="hero">
+  <div class="hero-text reveal">
+    <h1>Seguridad <span>inteligente</span> contra gas y monóxido</h1>
+    <p>
+      SentinelGas es un sistema diseñado para detectar riesgos,
+      alertar al usuario y facilitar una evacuación segura en tiempo real.
+    </p>
 
-  <div class="container">
-
-    <section class="hero-card">
-      <h2>Prevención, alerta y evacuación inteligente</h2>
-      <p>
-        SentinelGas busca detectar de forma temprana la presencia de gas y monóxido
-        de carbono, activar alertas inmediatas, enviar notificaciones al celular y
-        asistir al usuario con acciones seguras ante una emergencia.
-      </p>
-      <div class="tag">App móvil + sensores + salida de emergencia</div>
-    </section>
-
-    <section id="proyecto">
-      <h2>Proyecto</h2>
-      <p>
-        En viviendas, escuelas y talleres pueden producirse fugas de gas o intoxicaciones
-        por monóxido de carbono. SentinelGas propone una solución que detecta el riesgo,
-        avisa al usuario y ayuda a actuar rápido para reducir accidentes graves. :contentReference[oaicite:1]{index=1}
-      </p>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3>Objetivo principal</h3>
-          <p>Detectar riesgos, alertar en tiempo real y facilitar una evacuación segura.</p>
-        </div>
-        <div class="card">
-          <h3>Problema que resuelve</h3>
-          <p>La falta de detección temprana y la reacción tardía ante fugas o monóxido.</p>
-        </div>
-        <div class="card">
-          <h3>Diferencia del proyecto</h3>
-          <p>No solo detecta, también guía y asiste al usuario mediante una app.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="funcionamiento">
-      <h2>Funcionamiento</h2>
-      <ol>
-        <li>Los sensores monitorean el ambiente de manera constante.</li>
-        <li>Si detectan niveles peligrosos, el sistema activa una alarma.</li>
-        <li>La app móvil recibe una notificación inmediata.</li>
-        <li>El usuario obtiene una recomendación según el tipo de riesgo.</li>
-        <li>Se puede activar una salida de emergencia para evacuar mejor.</li>
-      </ol>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>Fuga de gas</h3>
-          <p>Se prioriza la ventilación del ambiente y la advertencia rápida.</p>
-        </div>
-        <div class="card">
-          <h3>Monóxido o incendio</h3>
-          <p>Se prioriza la evacuación y evitar acciones que empeoren la situación. :contentReference[oaicite:2]{index=2}</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="tecnologia">
-      <h2>Tecnología utilizada</h2>
-      <div class="grid-4">
-        <div class="card">
-          <h3>Sensores</h3>
-          <p>Sensores de gas, monóxido de carbono y temperatura.</p>
-        </div>
-        <div class="card">
-          <h3>Control</h3>
-          <p>Microcontrolador encargado de procesar datos y tomar decisiones.</p>
-        </div>
-        <div class="card">
-          <h3>Aplicación móvil</h3>
-          <p>Recibe alertas y muestra instrucciones claras al usuario.</p>
-        </div>
-        <div class="card">
-          <h3>Emergencia</h3>
-          <p>Ventanas automáticas, puertas con cierre magnético o liberación segura. :contentReference[oaicite:3]{index=3}</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="impacto">
-      <h2>Impacto y beneficios</h2>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Impacto social</h3>
-          <p>
-            Mejora la seguridad en hogares, escuelas y espacios de trabajo al reducir
-            el tiempo de reacción frente a un riesgo.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Beneficios del sistema</h3>
-          <ul>
-            <li>Mayor seguridad</li>
-            <li>Respuesta automática</li>
-            <li>Notificación remota</li>
-            <li>Asistencia al usuario</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>Ventajas</h3>
-          <p>Integra detección, alarma, app móvil y guía de acción en un mismo sistema.</p>
-        </div>
-        <div class="card">
-          <h3>Aspectos a mejorar</h3>
-          <p>
-            Puede requerir mantenimiento, evitar falsas alarmas y resolver bien la salida
-            de emergencia sin modificaciones complejas. :contentReference[oaicite:4]{index=4}
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="equipo">
-      <h2>Equipo</h2>
-      <p>
-        Somos estudiantes técnicos que desarrollamos SentinelGas como una propuesta de
-        innovación orientada a la seguridad y la prevención.
-      </p>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3>Valentino Radice</h3>
-          <p>Diseño, presentación del proyecto y desarrollo general.</p>
-        </div>
-        <div class="card">
-          <h3>Integrante 2</h3>
-          <p>Aplicación móvil y simulación del sistema.</p>
-        </div>
-        <div class="card">
-          <h3>Integrante 3</h3>
-          <p>Electrónica, sensores y módulo de control.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="simulacion">
-      <h2>Simulación del sistema</h2>
-
-      <div class="estado-box">
-        <div class="estado-label">Estado actual</div>
-        <div class="estado-valor" id="estado">SISTEMA SEGURO</div>
-        <div class="estado-detalle" id="detalle">No se detectaron fugas ni niveles peligrosos.</div>
-      </div>
-
-      <div class="botones">
-        <button class="btn-gas" onclick="detectarGas()">🚨 Fuga de gas</button>
-        <button class="btn-co" onclick="detectarMonoxido()">☠️ Monóxido</button>
-        <button class="btn-evac" onclick="activarEvacuacion()">🚪 Evacuación</button>
-        <button class="btn-reset" onclick="restablecerSistema()">✅ Restablecer</button>
-      </div>
-
-      <div class="grid-3" style="margin-top: 20px;">
-        <div class="card">
-          <h3>Alarma</h3>
-          <p id="alarma">Inactiva</p>
-        </div>
-        <div class="card">
-          <h3>Notificación móvil</h3>
-          <p id="notificacion">Sin alertas enviadas</p>
-        </div>
-        <div class="card">
-          <h3>Acción recomendada</h3>
-          <p id="accion">Mantener monitoreo normal</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="contacto" class="contacto">
-      <h2>Contacto</h2>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Información</h3>
-          <p>Proyecto escolar técnico orientado a la prevención y seguridad.</p>
-          <p>Curso: 6° año</p>
-          <p>Proyecto: SentinelGas</p>
-        </div>
-        <div class="card">
-          <h3>Datos de contacto</h3>
-          <p>Email: <a href="mailto:sentinelgasproyecto@gmail.com">sentinelgasproyecto@gmail.com</a></p>
-          <p>Instagram: <a href="#">@sentinelgas</a></p>
-          <p>Ubicación: Bahía Blanca, Buenos Aires</p>
-        </div>
-      </div>
-    </section>
-
+    <div class="hero-buttons">
+      <a href="proyecto.html" class="btn btn-primary">Ver proyecto</a>
+      <a href="equipo.html" class="btn btn-secondary">Conocer equipo</a>
+    </div>
   </div>
 
-  <footer>
-    <p>SentinelGas - Sistema inteligente de detección de gas y monóxido</p>
-    <p>Valentino Radice - 6°4°</p>
-  </footer>
+  <div class="hero-panel reveal">
+    <div class="status-tag">Monitoreo activo</div>
+    <h2>Centro de control</h2>
+    <p style="color:#b7c6d1; margin-top:10px;">
+      Sistema conectado listo para detectar peligros.
+    </p>
 
-  <script>
-    function detectarGas() {
-      document.body.classList.remove("seguro", "alerta");
-      document.body.classList.add("peligro");
-      document.getElementById("estado").innerText = "PELIGRO: FUGA DE GAS";
-      document.getElementById("detalle").innerText = "Se detectó una posible fuga. Se recomienda ventilar el ambiente.";
-      document.getElementById("alarma").innerText = "Activa";
-      document.getElementById("notificacion").innerText = "Alerta enviada al celular";
-      document.getElementById("accion").innerText = "Ventilar y revisar salida segura";
-      alert("⚠️ Fuga de gas detectada. Ventilar el ambiente.");
-    }
+    <div class="monitor-box">
+      <div class="monitor-item">
+        <h3>🚨 Detección automática</h3>
+        <p>Sensores monitorean el ambiente constantemente.</p>
+      </div>
 
-    function detectarMonoxido() {
-      document.body.classList.remove("seguro", "peligro");
-      document.body.classList.add("alerta");
-      document.getElementById("estado").innerText = "ALERTA: MONÓXIDO DETECTADO";
-      document.getElementById("detalle").innerText = "Se detectó un nivel peligroso de monóxido de carbono.";
-      document.getElementById("alarma").innerText = "Activa";
-      document.getElementById("notificacion").innerText = "Alerta crítica enviada";
-      document.getElementById("accion").innerText = "Evacuar inmediatamente";
-      alert("☠️ Monóxido detectado. Evacuar el lugar.");
-    }
+      <div class="monitor-item">
+        <h3>📱 Notificación móvil</h3>
+        <p>Alertas en tiempo real al usuario.</p>
+      </div>
 
-    function activarEvacuacion() {
-      document.body.classList.remove("seguro");
-      document.body.classList.add("peligro");
-      document.getElementById("estado").innerText = "MODO EVACUACIÓN";
-      document.getElementById("detalle").innerText = "Salida de emergencia activada para evacuar el área.";
-      document.getElementById("alarma").innerText = "Sirena de evacuación activa";
-      document.getElementById("notificacion").innerText = "Mensaje de evacuación enviado";
-      document.getElementById("accion").innerText = "Abandonar el lugar de forma ordenada";
-      alert("🚪 Evacuación activada.");
-    }
+      <div class="monitor-item">
+        <h3>🚪 Evacuación segura</h3>
+        <p>Guía al usuario para actuar correctamente.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function restablecerSistema() {
-      document.body.classList.remove("peligro", "alerta");
-      document.body.classList.add("seguro");
-      document.getElementById("estado").innerText = "SISTEMA SEGURO";
-      document.getElementById("detalle").innerText = "No se detectaron fugas ni niveles peligrosos.";
-      document.getElementById("alarma").innerText = "Inactiva";
-      document.getElementById("notificacion").innerText = "Sin alertas enviadas";
-      document.getElementById("accion").innerText = "Mantener monitoreo normal";
-    }
-  </script>
+<section class="section">
+  <div class="reveal">
+    <h2 class="section-title">¿Qué hace SentinelGas?</h2>
+    <p class="section-subtitle">
+      Combina sensores, control inteligente y una app móvil
+      para prevenir accidentes por gas y monóxido.
+    </p>
+  </div>
 
+  <div class="cards">
+    <div class="card reveal">
+      <div class="card-icon">🧪</div>
+      <h3>Detección</h3>
+      <p>Identifica niveles peligrosos en el ambiente.</p>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-icon">🔔</div>
+      <h3>Alerta</h3>
+      <p>Activa alarmas y notificaciones.</p>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-icon">🧭</div>
+      <h3>Asistencia</h3>
+      <p>Indica al usuario qué hacer en cada situación.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-box reveal">
+    <h2>Protección en tiempo real</h2>
+    <p>
+      Un sistema pensado para actuar rápido cuando más importa.
+    </p>
+    <a href="contacto.html" class="btn btn-primary">Contactar</a>
+  </div>
+</section>
+
+<footer>
+  <p>SentinelGas · Sistema de detección inteligente</p>
+  <p>Valentino Radice - 6°4°</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
