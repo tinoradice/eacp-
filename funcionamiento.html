@@ -29,7 +29,7 @@
     <h1>Cómo trabaja SentinelGas paso a paso</h1>
     <p class="home-desc">
       SentinelGas convierte datos del entorno en información útil para prevenir accidentes,
-      activar una advertencia rápida y asistir al usuario con una respuesta clara.
+      alertar rápidamente y asistir al usuario con una respuesta clara.
     </p>
   </div>
 </section>
@@ -37,128 +37,60 @@
 <section class="features-section">
   <div class="section-header fade-up">
     <h2>Arquitectura del sistema</h2>
-    <p>
-      El proyecto está compuesto por sensores de detección, un módulo de procesamiento,
-      un sistema de alertas y una aplicación móvil conectada al usuario.
-    </p>
   </div>
 
   <div class="features-grid fade-up">
     <div class="feature-card">
-      <div class="feature-icon">1️⃣</div>
-      <h3>Monitoreo del ambiente</h3>
-      <p>
-        Los sensores instalados analizan continuamente el aire para detectar
-        concentraciones peligrosas de gas o monóxido de carbono.
-      </p>
+      <h3>1. Detección</h3>
+      <p>Los sensores analizan continuamente el ambiente.</p>
     </div>
 
     <div class="feature-card">
-      <div class="feature-icon">2️⃣</div>
-      <h3>Lectura de datos</h3>
-      <p>
-        Los valores registrados son enviados al microcontrolador, que interpreta
-        la información recibida y la compara con rangos predefinidos.
-      </p>
+      <h3>2. Procesamiento</h3>
+      <p>El microcontrolador interpreta los datos recibidos.</p>
     </div>
 
     <div class="feature-card">
-      <div class="feature-icon">3️⃣</div>
-      <h3>Análisis del riesgo</h3>
-      <p>
-        Si el nivel medido supera el umbral seguro, el sistema reconoce que existe
-        una situación anormal y activa el protocolo de advertencia.
-      </p>
+      <h3>3. Alerta</h3>
+      <p>Se activa alarma y notificación al usuario.</p>
     </div>
 
     <div class="feature-card">
-      <div class="feature-icon">4️⃣</div>
-      <h3>Alerta inmediata</h3>
-      <p>
-        Se activa una alarma local y al mismo tiempo se envía una notificación a la app
-        para informar qué tipo de riesgo fue detectado.
-      </p>
+      <h3>4. Acción</h3>
+      <p>El sistema guía al usuario para actuar correctamente.</p>
     </div>
   </div>
 </section>
 
 <section class="features-section">
   <div class="section-header fade-up">
-    <h2>Respuesta del sistema</h2>
-    <p>
-      SentinelGas no solo detecta, sino que acompaña al usuario con información
-      útil para tomar la mejor decisión según el tipo de peligro.
-    </p>
-  </div>
-
-  <div class="features-grid fade-up">
-    <div class="feature-card">
-      <div class="feature-icon">🪟</div>
-      <h3>Si hay fuga de gas</h3>
-      <p>
-        El sistema recomienda ventilar el ambiente, evitar fuentes de ignición
-        y mantener distancia de posibles puntos de riesgo.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">☠️</div>
-      <h3>Si hay monóxido</h3>
-      <p>
-        La aplicación alerta sobre un gas peligroso difícil de percibir y sugiere
-        evacuar el lugar para reducir el riesgo de intoxicación.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">📲</div>
-      <h3>Comunicación con la app</h3>
-      <p>
-        El usuario puede visualizar el estado del sistema, recibir advertencias
-        y comprender rápidamente qué está ocurriendo en el entorno.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">🛡️</div>
-      <h3>Objetivo técnico</h3>
-      <p>
-        Integrar detección, procesamiento y asistencia en una sola solución tecnológica
-        aplicada a situaciones reales de seguridad.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="features-section">
-  <div class="section-header fade-up">
-    <h2>Resumen técnico</h2>
-    <p>
-      El sistema puede entenderse como una cadena simple: detectar, procesar,
-      alertar y guiar.
-    </p>
+    <h2>Especificaciones del sistema</h2>
   </div>
 
   <div class="spec-grid fade-up">
+
     <div class="spec-box">
-      <h3>Entrada del sistema</h3>
+      <h3>Componentes</h3>
       <ul>
-        <li>Lectura del ambiente</li>
-        <li>Detección de gas</li>
-        <li>Detección de monóxido</li>
-        <li>Datos recibidos por sensores</li>
+        <li>Sensores de gas</li>
+        <li>Sensor de monóxido</li>
+        <li>Microcontrolador</li>
+        <li>Alarma</li>
+        <li>Aplicación móvil</li>
       </ul>
     </div>
 
     <div class="spec-box">
-      <h3>Salida del sistema</h3>
+      <h3>Aplicaciones</h3>
       <ul>
-        <li>Alarma local</li>
-        <li>Notificación en la app</li>
-        <li>Indicación para el usuario</li>
-        <li>Respuesta según el tipo de riesgo</li>
+        <li>Hogares</li>
+        <li>Escuelas</li>
+        <li>Talleres</li>
+        <li>Ambientes cerrados</li>
+        <li>Zonas de riesgo</li>
       </ul>
     </div>
+
   </div>
 </section>
 
