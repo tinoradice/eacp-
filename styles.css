@@ -229,10 +229,16 @@ nav {
   letter-spacing: -0.5px;
 }
 
-.feature-card p {
+.feature-card p,
+.feature-card li {
   color: var(--muted);
   line-height: 1.8;
   font-size: 17px;
+}
+
+.feature-card ul {
+  padding-left: 18px;
+  margin-top: 8px;
 }
 
 /* IMAGE BLOCKS */
@@ -296,6 +302,36 @@ nav {
   color: var(--muted);
   font-size: 18px;
   line-height: 1.8;
+}
+
+/* SPEC GRID */
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.spec-box {
+  background: linear-gradient(180deg, var(--card), var(--card-2));
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 30px 24px;
+}
+
+.spec-box h3 {
+  font-size: 28px;
+  margin-bottom: 14px;
+}
+
+.spec-box p,
+.spec-box li {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 17px;
+}
+
+.spec-box ul {
+  padding-left: 18px;
 }
 
 /* CTA */
@@ -366,7 +402,8 @@ footer p + p {
   }
 
   .image-grid,
-  .contact-grid-big {
+  .contact-grid-big,
+  .spec-grid {
     grid-template-columns: 1fr;
   }
 
